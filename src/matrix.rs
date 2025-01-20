@@ -1,5 +1,5 @@
-use std::ops::{ Add, Sub, Mul };
 use std::cmp::PartialEq;
+use std::ops::{Add, Mul, Sub};
 use std::slice::{Iter, IterMut};
 
 #[derive(Debug, Clone)]
@@ -34,7 +34,8 @@ impl<K> Matrix<K> {
 
 impl<K> PartialEq for Matrix<K>
 where
-    Vec<K>: PartialEq, K: PartialEq
+    Vec<K>: PartialEq,
+    K: PartialEq,
 {
     fn eq(&self, other: &Self) -> bool {
         self.iter().zip(other.iter()).all(|(a, b)| a == b)
@@ -44,33 +45,79 @@ where
     }
 }
 
+// impl<K> Add for Matrix<K>
+// where
+//     K: Add<Output = K> + Copy
+// {
+//     type Output = K;
+
+//     fn add(self, rhs: Self) -> Self::Output {
+
+//     }
+// }
+
+// impl<K> Sub for Matrix<K>
+// where
+//     K: Sub<Output = K> + Copy
+// {
+//     type Output = K;
+
+//     fn sub(self, rhs: Self) -> Self::Output {
+
+//     }
+// }
+
+// impl<K> Mul for Matrix<K>
+// where
+//     K: Mul<Output = K> + Copy
+// {
+//     type Output = K;
+
+//     fn mul(self, rhs: Self) -> Self::Output {
+
+//     }
+// }
+
 impl<K> Matrix<K>
 where
-    K: Add<Output = K> + Copy, K: Sub<Output = K> + Copy, K: Mul<Output = K> + Copy,
+    K: Add<Output = K> + Copy,
+    K: Sub<Output = K> + Copy,
+    K: Mul<Output = K> + Copy,
 {
     pub fn add(&mut self, m: Matrix<K>) {
-        if self.elements.len() != m.elements.len() || self.elements[0].len() != m.elements[0].len() {
+        if self.elements.len() != m.elements.len() || self.elements[0].len() != m.elements[0].len()
+        {
             panic!("Matrices must have the same dimensions");
         }
 
-        self.iter_mut().zip(m.iter()).for_each(|(row_self, row_other)| {
-            row_self.iter_mut().zip(row_other.iter()).for_each(|(a, b)| *a = *a + *b)
-        });
+        self.iter_mut()
+            .zip(m.iter())
+            .for_each(|(row_self, row_other)| {
+                row_self
+                    .iter_mut()
+                    .zip(row_other.iter())
+                    .for_each(|(a, b)| *a = *a + *b)
+            });
     }
 
     pub fn sub(&mut self, m: Matrix<K>) {
-        if self.elements.len() != m.elements.len() || self.elements[0].len() != m.elements[0].len() {
+        if self.elements.len() != m.elements.len() || self.elements[0].len() != m.elements[0].len()
+        {
             panic!("Matrices must have the same dimensions");
         }
 
-        self.iter_mut().zip(m.iter()).for_each(|(row_self, row_other)| {
-            row_self.iter_mut().zip(row_other.iter()).for_each(|(a, b)| *a = *a - *b)
-        });
+        self.iter_mut()
+            .zip(m.iter())
+            .for_each(|(row_self, row_other)| {
+                row_self
+                    .iter_mut()
+                    .zip(row_other.iter())
+                    .for_each(|(a, b)| *a = *a - *b)
+            });
     }
 
     pub fn scl(&mut self, a: K) {
-        self.iter_mut().for_each(|row| {
-            row.iter_mut().for_each(|v| *v = *v * a )
-        });
+        self.iter_mut()
+            .for_each(|row| row.iter_mut().for_each(|v| *v = *v * a));
     }
 }

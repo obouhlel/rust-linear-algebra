@@ -8,9 +8,15 @@ mod tests {
     #[test]
     fn test_case_1() {
         let u = vec![
-            Vector { elements: vec![1, 2, 3] },
-            Vector { elements: vec![4, 5, 6] },
-            Vector { elements: vec![7, 8, 9] },
+            Vector {
+                elements: vec![1, 2, 3],
+            },
+            Vector {
+                elements: vec![4, 5, 6],
+            },
+            Vector {
+                elements: vec![7, 8, 9],
+            },
         ];
         let coefs = vec![1, 2, 3];
         let result = linear_combination(&u, &coefs);
@@ -21,8 +27,12 @@ mod tests {
     #[should_panic]
     fn test_case_2() {
         let u = vec![
-            Vector { elements: vec![1, 2, 3] },
-            Vector { elements: vec![4, 5, 6] },
+            Vector {
+                elements: vec![1, 2, 3],
+            },
+            Vector {
+                elements: vec![4, 5, 6],
+            },
         ];
         let coefs = vec![1, 2, 3];
         linear_combination(&u, &coefs);

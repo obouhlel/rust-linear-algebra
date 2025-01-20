@@ -15,6 +15,14 @@ mod tests {
     }
 
     #[test]
+    fn add_symbole() {
+        let v1 = Vector::from([1, 3]);
+        let v2 = Vector::from([2, 1]);
+
+        assert_eq!(v1 + v2, Vector::from([3, 4]));
+    }
+
+    #[test]
     #[should_panic]
     fn add_panic() {
         let mut v1 = Vector::from([1, 3, 4]);
@@ -31,6 +39,14 @@ mod tests {
         v1.sub(v2);
 
         assert_eq!(v1, Vector::from([3, 4]));
+    }
+
+    #[test]
+    fn sub_symbole() {
+        let v1 = Vector::from([5, 7]);
+        let v2 = Vector::from([2, 3]);
+
+        assert_eq!(v1 - v2, Vector::from([3, 4]));
     }
 
     #[test]

@@ -1,16 +1,19 @@
 use crate::vector::Vector;
-use std::{ops::{Add, Mul}, vec};
+use std::{
+    ops::{Add, Mul},
+    vec,
+};
 
 pub fn linear_combination<K>(u: &[Vector<K>], coefs: &[K]) -> Vector<K>
 where
-    K: Copy + Default + Add<Output = K> + Mul<Output = K>
+    K: Copy + Default + Add<Output = K> + Mul<Output = K>,
 {
     if u.len() != coefs.len() {
         panic!("Need the same size");
     }
 
     let mut result = Vector {
-        elements: vec![K::default(); u[0].elements.len()]
+        elements: vec![K::default(); u[0].elements.len()],
     };
 
     for (vector, &coef) in u.iter().zip(coefs) {

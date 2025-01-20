@@ -1,5 +1,5 @@
-use std::ops::{Add, Mul, Sub};
 use std::cmp::PartialEq;
+use std::ops::{Add, Mul, Sub};
 use std::slice::{Iter, IterMut};
 
 #[derive(Debug, Clone)]
@@ -18,7 +18,9 @@ where
     K: Clone,
 {
     fn from(elements: [K; N]) -> Self {
-        Vector { elements: elements.to_vec() }
+        Vector {
+            elements: elements.to_vec(),
+        }
     }
 }
 
@@ -43,9 +45,46 @@ where
     }
 }
 
+impl<K> Add for Vector<K>
+where
+    K: Add<Output = K> + Copy,
+{
+    type Output = Vector<K>;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        let elements = self.iter().zip(rhs.iter()).map(|(&a, &b)| a + b).collect();
+        Vector { elements }
+    }
+}
+
+impl<K> Sub for Vector<K>
+where
+    K: Sub<Output = K> + Copy,
+{
+    type Output = Vector<K>;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        let elements = self.iter().zip(rhs.iter()).map(|(&a, &b)| a - b).collect();
+        Vector { elements }
+    }
+}
+
+// impl<K> Mul for Vector<K>
+// where
+//     K: Mul<Output = K> + Copy
+// {
+//     type Output = K;
+
+//     fn mul(self, rhs: Self) -> Self::Output {
+
+//     }
+// }
+
 impl<K> Vector<K>
-where 
-    K: Add<Output = K> + Copy, K: Sub<Output = K> + Copy, K: Mul<Output = K> + Copy
+where
+    K: Add<Output = K> + Copy,
+    K: Sub<Output = K> + Copy,
+    K: Mul<Output = K> + Copy,
 {
     pub fn add(&mut self, v: Vector<K>) {
         if self.elements.len() != v.elements.len() {
