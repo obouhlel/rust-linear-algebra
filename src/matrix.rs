@@ -1,5 +1,6 @@
 use std::ops::{ Add, Sub, Mul };
 use std::cmp::PartialEq;
+use std::slice::{Iter, IterMut};
 
 #[derive(Debug, Clone)]
 pub struct Matrix<K> {
@@ -22,12 +23,21 @@ where
     }
 }
 
+impl<K> Matrix<K> {
+    pub fn iter(&self) -> Iter<Vec<K>> {
+        self.elements.iter()
+    }
+    pub fn iter_mut(&mut self) -> IterMut<Vec<K>> {
+        self.elements.iter_mut()
+    }
+}
+
 impl<K> PartialEq for Matrix<K>
 where
     Vec<K>: PartialEq, K: PartialEq
 {
     fn eq(&self, other: &Self) -> bool {
-        self.elements.iter().zip(other.elements.iter()).all(|(a, b)| a == b)
+        self.iter().zip(other.iter()).all(|(a, b)| a == b)
     }
     fn ne(&self, other: &Self) -> bool {
         !self.eq(other)
@@ -43,7 +53,7 @@ where
             panic!("Matrices must have the same dimensions");
         }
 
-        self.elements.iter_mut().zip(m.elements.iter()).for_each(|(row_self, row_other)| {
+        self.iter_mut().zip(m.iter()).for_each(|(row_self, row_other)| {
             row_self.iter_mut().zip(row_other.iter()).for_each(|(a, b)| *a = *a + *b)
         });
     }
@@ -53,13 +63,13 @@ where
             panic!("Matrices must have the same dimensions");
         }
 
-        self.elements.iter_mut().zip(m.elements.iter()).for_each(|(row_self, row_other)| {
+        self.iter_mut().zip(m.iter()).for_each(|(row_self, row_other)| {
             row_self.iter_mut().zip(row_other.iter()).for_each(|(a, b)| *a = *a - *b)
         });
     }
 
     pub fn scl(&mut self, a: K) {
-        self.elements.iter_mut().for_each(|row| {
+        self.iter_mut().for_each(|row| {
             row.iter_mut().for_each(|v| *v = *v * a )
         });
     }

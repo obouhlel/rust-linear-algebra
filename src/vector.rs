@@ -52,16 +52,16 @@ where
             panic!("The vector need to be on the same plan");
         }
 
-        self.elements = self.elements.iter().zip(v.elements.iter()).map(|(&a, &b)| a + b).collect();
+        self.elements = self.iter().zip(v.iter()).map(|(&a, &b)| a + b).collect();
     }
     pub fn sub(&mut self, v: Vector<K>) {
         if self.elements.len() != v.elements.len() {
             panic!("The vector need to be on the same plan");
         }
 
-        self.elements = self.elements.iter().zip(v.elements.iter()).map(|(&a, &b)| a - b).collect();
+        self.elements = self.iter().zip(v.iter()).map(|(&a, &b)| a - b).collect();
     }
     pub fn scl(&mut self, a: K) {
-        self.elements = self.elements.iter().map(|&n| n * a).collect();
+        self.elements = self.iter().map(|&n| n * a).collect();
     }
 }
