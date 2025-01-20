@@ -1,5 +1,6 @@
 use std::ops::{Add, Mul, Sub};
 use std::cmp::PartialEq;
+use std::slice::{Iter, IterMut};
 
 #[derive(Debug, Clone)]
 pub struct Vector<K> {
@@ -18,6 +19,15 @@ where
 {
     fn from(elements: [K; N]) -> Self {
         Vector { elements: elements.to_vec() }
+    }
+}
+
+impl<K> Vector<K> {
+    pub fn iter(&self) -> Iter<K> {
+        self.elements.iter()
+    }
+    pub fn iter_mut(&mut self) -> IterMut<K> {
+        self.elements.iter_mut()
     }
 }
 
