@@ -1,8 +1,27 @@
 use std::ops::{Add, Mul, Sub};
+use std::cmp::PartialEq;
 
 #[derive(Debug, Clone)]
 pub struct Vector<K> {
     pub elements: Vec<K>,
+}
+
+impl<K> From<Vec<K>> for Vector<K> {
+    fn from(elements: Vec<K>) -> Self {
+        Vector { elements }
+    }
+}
+
+impl<K> PartialEq for Vector<K>
+where
+    K: PartialEq,
+{
+    fn eq(&self, other: &Self) -> bool {
+        self.elements == other.elements
+    }
+    fn ne(&self, other: &Self) -> bool {
+        self.elements != other.elements
+    }
 }
 
 impl<K> Vector<K>
