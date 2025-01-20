@@ -12,6 +12,15 @@ impl<K> From<Vec<K>> for Vector<K> {
     }
 }
 
+impl<K, const N: usize> From<[K; N]> for Vector<K>
+where
+    K: Clone,
+{
+    fn from(elements: [K; N]) -> Self {
+        Vector { elements: elements.to_vec() }
+    }
+}
+
 impl<K> PartialEq for Vector<K>
 where
     K: PartialEq,
