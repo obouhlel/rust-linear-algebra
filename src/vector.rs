@@ -69,16 +69,18 @@ where
     }
 }
 
-// impl<K> Mul for Vector<K>
-// where
-//     K: Mul<Output = K> + Copy
-// {
-//     type Output = K;
+impl<K, T> Mul<T> for Vector<K>
+where
+    K: Mul<T, Output = K> + Copy,
+    T: Copy,
+{
+    type Output = Vector<K>;
 
-//     fn mul(self, rhs: Self) -> Self::Output {
-
-//     }
-// }
+    fn mul(self, rhs: T) -> Self::Output {
+        let elements = self.iter().map(|&a| a * rhs).collect();
+        Vector { elements }
+    }
+}
 
 impl<K> Vector<K>
 where

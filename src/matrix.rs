@@ -45,38 +45,75 @@ where
     }
 }
 
-// impl<K> Add for Matrix<K>
-// where
-//     K: Add<Output = K> + Copy
-// {
-//     type Output = K;
+impl<K> Add for Matrix<K>
+where
+    K: Add<Output = K> + Copy + Default,
+{
+    type Output = Matrix<K>;
 
-//     fn add(self, rhs: Self) -> Self::Output {
+    fn add(self, rhs: Self) -> Self::Output {
+        if self.elements.len() != rhs.elements.len()
+            || self.elements[0].len() != rhs.elements[0].len()
+        {
+            panic!("Matrices must have the same dimensions");
+        }
 
-//     }
-// }
+        let mut elements = vec![vec![K::default(); self.elements[0].len()]; self.elements.len()];
 
-// impl<K> Sub for Matrix<K>
-// where
-//     K: Sub<Output = K> + Copy
-// {
-//     type Output = K;
+        for i in 0..self.elements.len() {
+            for j in 0..self.elements[i].len() {
+                elements[i][j] = self.elements[i][j] + rhs.elements[i][j];
+            }
+        }
 
-//     fn sub(self, rhs: Self) -> Self::Output {
+        Matrix { elements }
+    }
+}
 
-//     }
-// }
+impl<K> Sub for Matrix<K>
+where
+    K: Sub<Output = K> + Copy + Default,
+{
+    type Output = Matrix<K>;
 
-// impl<K> Mul for Matrix<K>
-// where
-//     K: Mul<Output = K> + Copy
-// {
-//     type Output = K;
+    fn sub(self, rhs: Self) -> Self::Output {
+        if self.elements.len() != rhs.elements.len()
+            || self.elements[0].len() != rhs.elements[0].len()
+        {
+            panic!("Matrices must have the same dimensions");
+        }
 
-//     fn mul(self, rhs: Self) -> Self::Output {
+        let mut elements = vec![vec![K::default(); self.elements[0].len()]; self.elements.len()];
 
-//     }
-// }
+        for i in 0..self.elements.len() {
+            for j in 0..self.elements[i].len() {
+                elements[i][j] = self.elements[i][j] - rhs.elements[i][j];
+            }
+        }
+
+        Matrix { elements }
+    }
+}
+
+impl<K, T> Mul<T> for Matrix<K>
+where
+    K: Mul<T, Output = K> + Copy + Default,
+    T: Copy,
+{
+    type Output = Matrix<K>;
+
+    fn mul(self, rhs: T) -> Self::Output {
+        let mut elements = vec![vec![K::default(); self.elements[0].len()]; self.elements.len()];
+
+        for i in 0..self.elements.len() {
+            for j in 0..self.elements[0].len() {
+                elements[i][j] = self.elements[i][j] * rhs;
+            }
+        }
+
+        Matrix { elements }
+    }
+}
 
 impl<K> Matrix<K>
 where
