@@ -82,11 +82,23 @@ where
     }
 }
 
+impl<K> Mul for Vector<K>
+where
+    K: Mul<Output = K> + Copy + Default,
+    K: Add<Output = K> + Copy,
+{
+    type Output = K;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        self.iter().zip(rhs.iter()).map(|(&a, &b)| a * b).fold(K::default(), |acc, x| acc + x)
+    }
+}
+
 impl<K> Vector<K>
 where
-    K: Add<Output = K> + Copy,
-    K: Sub<Output = K> + Copy,
-    K: Mul<Output = K> + Copy,
+    K: Add<Output = K> + Copy + Default,
+    K: Sub<Output = K> + Copy + Default,
+    K: Mul<Output = K> + Copy + Default,
 {
     pub fn add(&mut self, v: Vector<K>) {
         if self.elements.len() != v.elements.len() {
@@ -104,5 +116,12 @@ where
     }
     pub fn scl(&mut self, a: K) {
         self.elements = self.iter().map(|&n| n * a).collect();
+    }
+    pub fn dot(&self, v: Self) -> K {
+        if self.elements.len() != v.elements.len() {
+            panic!("The vector need to be on the same plan");
+        }
+
+        self.iter().zip(v.iter()).map(|(&a, &b)| a * b).fold(K::default(), |acc, x| acc + x)
     }
 }
