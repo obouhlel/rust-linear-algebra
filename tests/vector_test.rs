@@ -120,4 +120,22 @@ mod tests {
 
         assert_eq!(u * v, 9.0);
     }
+
+    #[test]
+    #[should_panic]
+    fn dot_panic() {
+        let u = Vector::from([-1.0, 6.0]);
+        let v = Vector::from([3.0, 2.0, 3.2]);
+
+        assert_eq!(u.dot(v), 9.0);
+    }
+
+    #[test]
+    #[should_panic]
+    fn dot_symbole_panic() {
+        let u = Vector::from([-1.0, 6.0]);
+        let v = Vector::from([3.0, 2.0, 3.2]);
+
+        assert_eq!(u * v, 9.0);
+    }
 }

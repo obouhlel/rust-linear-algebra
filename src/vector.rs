@@ -90,6 +90,10 @@ where
     type Output = K;
 
     fn mul(self, rhs: Self) -> Self::Output {
+        if self.elements.len() != rhs.elements.len() {
+            panic!("The vector need to be on the same plan");
+        }
+
         self.iter().zip(rhs.iter()).map(|(&a, &b)| a * b).fold(K::default(), |acc, x| acc + x)
     }
 }
