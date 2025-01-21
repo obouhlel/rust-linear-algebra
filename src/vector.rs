@@ -94,7 +94,10 @@ where
             panic!("The vector need to be on the same plan");
         }
 
-        self.iter().zip(rhs.iter()).map(|(&a, &b)| a * b).fold(K::default(), |acc, x| acc + x)
+        self.iter()
+            .zip(rhs.iter())
+            .map(|(&a, &b)| a * b)
+            .fold(K::default(), |acc, x| acc + x)
     }
 }
 
@@ -126,6 +129,38 @@ where
             panic!("The vector need to be on the same plan");
         }
 
-        self.iter().zip(v.iter()).map(|(&a, &b)| a * b).fold(K::default(), |acc, x| acc + x)
+        self.iter()
+            .zip(v.iter())
+            .map(|(&a, &b)| a * b)
+            .fold(K::default(), |acc, x| acc + x)
+    }
+}
+
+impl<V> Vector<V>
+where
+    V: Copy + Mul<f32, Output = V> + Default + Into<f32> + PartialOrd,
+{
+    pub fn norm_1(&self) -> f32 {
+        self.iter().fold(0.0, |acc, &x| {
+            let x_f32: f32 = x.into();
+            if x_f32 < 0.0 {
+                acc + (-x_f32)
+            } else {
+                acc + x_f32
+            }
+        })
+    }
+    pub fn norm(&self) -> f32 {
+        let sum_of_squares: f32 = self.elements.iter().fold(0.0, |acc, &x| {
+            let x_f32: f32 = x.into();
+            acc + x_f32.powi(2)
+        });
+        sum_of_squares.sqrt()
+    }
+    pub fn norm_inf(&self) -> f32 {
+        self.elements.iter().fold(0.0, |acc, &x| {
+            let x_f32: f32 = x.into();
+            acc.max(x_f32.abs())
+        })
     }
 }
