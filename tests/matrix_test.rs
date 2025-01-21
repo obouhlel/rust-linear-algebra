@@ -47,4 +47,27 @@ mod tests {
         m.scl(2);
         assert_eq!(m, Matrix::from([[2, 4], [6, 8]]));
     }
+
+    #[test]
+    fn add_operator() {
+        let m1 = Matrix::from([[1, 3], [4, 2]]);
+        let m2 = Matrix::from([[4, 1], [2, 3]]);
+        let result = m1 + m2;
+        assert_eq!(result, Matrix::from([[5, 4], [6, 5]]));
+    }
+
+    #[test]
+    fn sub_operator() {
+        let m1 = Matrix::from([[5, 4], [6, 5]]);
+        let m2 = Matrix::from([[4, 1], [2, 3]]);
+        let result = m1 - m2;
+        assert_eq!(result, Matrix::from([[1, 3], [4, 2]]));
+    }
+
+    #[test]
+    fn mul_operator() {
+        let m = Matrix::from([[1, 2], [3, 4]]);
+        let result = m * 2;
+        assert_eq!(result, Matrix::from([[2, 4], [6, 8]]));
+    }
 }

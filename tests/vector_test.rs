@@ -65,4 +65,11 @@ mod tests {
 
         assert_eq!(v, Vector::from([2, 4, 6]));
     }
+
+    #[test]
+    fn scl_symbole() {
+        let v = Vector::from([1, 2, 3]);
+
+        assert_eq!(v * 2, Vector::from([2, 4, 6]));
+    }
 }
