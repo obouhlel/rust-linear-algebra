@@ -1,8 +1,5 @@
 use crate::vector::Vector;
-use std::{
-    ops::{Add, Mul},
-    vec,
-};
+use std::ops::{Add, Mul};
 
 pub fn linear_combination<K>(u: &[Vector<K>], coefs: &[K]) -> Vector<K>
 where
