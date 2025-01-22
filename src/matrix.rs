@@ -68,9 +68,7 @@ where
     type Output = Matrix<K>;
 
     fn add(self, rhs: Self) -> Self::Output {
-        if self.rows() != rhs.rows()
-            || self.cols() != rhs.cols()
-        {
+        if self.rows() != rhs.rows() || self.cols() != rhs.cols() {
             panic!("Matrices must have the same dimensions");
         }
 
@@ -93,9 +91,7 @@ where
     type Output = Matrix<K>;
 
     fn sub(self, rhs: Self) -> Self::Output {
-        if self.rows() != rhs.rows()
-            || self.cols() != rhs.cols()
-        {
+        if self.rows() != rhs.rows() || self.cols() != rhs.cols() {
             panic!("Matrices must have the same dimensions");
         }
 
@@ -200,8 +196,7 @@ where
     K: Add<Output = K> + Copy,
 {
     pub fn add(&mut self, m: Matrix<K>) {
-        if self.rows() != m.rows() || self.cols() != m.cols()
-        {
+        if self.rows() != m.rows() || self.cols() != m.cols() {
             panic!("Matrices must have the same dimensions");
         }
 
@@ -221,8 +216,7 @@ where
     K: Sub<Output = K> + Copy,
 {
     pub fn sub(&mut self, m: Matrix<K>) {
-        if self.rows() != m.rows() || self.cols() != m.cols()
-        {
+        if self.rows() != m.rows() || self.cols() != m.cols() {
             panic!("Matrices must have the same dimensions");
         }
 
