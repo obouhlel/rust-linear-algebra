@@ -1,3 +1,4 @@
+use crate::vector::Vector;
 use std::cmp::PartialEq;
 use std::ops::{Add, Mul, Sub};
 use std::slice::{Iter, IterMut};
@@ -115,6 +116,39 @@ where
     }
 }
 
+impl<K> Mul for Matrix<K>
+where
+    K: Mul<Output = K> + Add<Output = K> + Copy + Default,
+{
+    type Output = Matrix<K>;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        if self.elements.is_empty() || rhs.elements.is_empty() {
+            panic!("One of the matrices is empty. Cannot perform multiplication.");
+        }
+        if self.elements[0].len() != rhs.elements.len() {
+            panic!(
+                "Incompatible dimensions for matrix multiplication. \
+                Left matrix has {} columns, but right matrix has {} rows.",
+                self.elements[0].len(),
+                rhs.elements.len()
+            );
+        }
+
+        let mut elements = vec![vec![K::default(); rhs.elements[0].len()]; self.elements.len()];
+
+        for i in 0..self.elements.len() {
+            for j in 0..rhs.elements[0].len() {
+                for k in 0..self.elements[0].len() {
+                    elements[i][j] = elements[i][j] + (self.elements[i][k] * rhs.elements[k][j]);
+                }
+            }
+        }
+
+        Matrix { elements }
+    }
+}
+
 impl<K> Matrix<K>
 where
     K: Add<Output = K> + Copy,
@@ -164,5 +198,14 @@ where
     pub fn scl(&mut self, a: K) {
         self.iter_mut()
             .for_each(|row| row.iter_mut().for_each(|v| *v = *v * a));
+    }
+}
+
+impl<K> Matrix<K>
+where
+    K: Mul<Output = K> + Add<Output = K> + Copy + Default,
+{
+    pub fn mul_mat(&self, mat: Matrix<K>) -> Matrix<K> {
+        self.clone() * mat
     }
 }
