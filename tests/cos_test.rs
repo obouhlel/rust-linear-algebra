@@ -39,4 +39,28 @@ mod tests {
         let v = Vector::from([4., 5., 6.]);
         assert!((angle_cos(&u, &v) - 0.974631846).abs() < 1e-6);
     }
+
+    #[test]
+    #[should_panic(expected = "The vector need to be on the same plan")]
+    fn test_angle_cos_panic_different_lengths() {
+        let u = Vector::from([1., 2.]);
+        let v = Vector::from([1., 2., 3.]);
+        angle_cos(&u, &v);
+    }
+
+    #[test]
+    #[should_panic(expected = "The vector can't be 0")]
+    fn test_angle_cos_panic_zero_vector_u() {
+        let u = Vector::from([0., 0.]);
+        let v = Vector::from([1., 2.]);
+        angle_cos(&u, &v);
+    }
+
+    #[test]
+    #[should_panic(expected = "The vector can't be 0")]
+    fn test_angle_cos_panic_zero_vector_v() {
+        let u = Vector::from([1., 2.]);
+        let v = Vector::from([0., 0.]);
+        angle_cos(&u, &v);
+    }
 }
