@@ -104,8 +104,6 @@ where
 impl<K> Vector<K>
 where
     K: Add<Output = K> + Copy + Default,
-    K: Sub<Output = K> + Copy + Default,
-    K: Mul<Output = K> + Copy + Default,
 {
     pub fn add(&mut self, v: Vector<K>) {
         if self.elements.len() != v.elements.len() {
@@ -114,6 +112,12 @@ where
 
         self.elements = self.iter().zip(v.iter()).map(|(&a, &b)| a + b).collect();
     }
+}
+
+impl<K> Vector<K>
+where
+    K: Sub<Output = K> + Copy + Default,
+{
     pub fn sub(&mut self, v: Vector<K>) {
         if self.elements.len() != v.elements.len() {
             panic!("The vector need to be on the same plan");
@@ -121,9 +125,22 @@ where
 
         self.elements = self.iter().zip(v.iter()).map(|(&a, &b)| a - b).collect();
     }
+}
+
+impl<K> Vector<K>
+where
+    K: Mul<Output = K> + Copy + Default,
+{
     pub fn scl(&mut self, a: K) {
         self.elements = self.iter().map(|&n| n * a).collect();
     }
+}
+
+impl<K> Vector<K>
+where
+    K: Add<Output = K> + Copy + Default,
+    K: Mul<Output = K> + Copy + Default,
+{
     pub fn dot(&self, v: Self) -> K {
         if self.elements.len() != v.elements.len() {
             panic!("The vector need to be on the same plan");
@@ -138,7 +155,7 @@ where
 
 impl<V> Vector<V>
 where
-    V: Copy + Mul<f32, Output = V> + Default + Into<f32> + PartialOrd,
+    V: Mul<f32, Output = V> + Into<f32> + Copy + Default,
 {
     pub fn norm_1(&self) -> f32 {
         self.iter().fold(0.0, |acc, &x| {

@@ -118,8 +118,6 @@ where
 impl<K> Matrix<K>
 where
     K: Add<Output = K> + Copy,
-    K: Sub<Output = K> + Copy,
-    K: Mul<Output = K> + Copy,
 {
     pub fn add(&mut self, m: Matrix<K>) {
         if self.elements.len() != m.elements.len() || self.elements[0].len() != m.elements[0].len()
@@ -136,7 +134,12 @@ where
                     .for_each(|(a, b)| *a = *a + *b)
             });
     }
+}
 
+impl<K> Matrix<K>
+where
+    K: Sub<Output = K> + Copy,
+{
     pub fn sub(&mut self, m: Matrix<K>) {
         if self.elements.len() != m.elements.len() || self.elements[0].len() != m.elements[0].len()
         {
@@ -152,7 +155,12 @@ where
                     .for_each(|(a, b)| *a = *a - *b)
             });
     }
+}
 
+impl<K> Matrix<K>
+where
+    K: Mul<Output = K> + Copy,
+{
     pub fn scl(&mut self, a: K) {
         self.iter_mut()
             .for_each(|row| row.iter_mut().for_each(|v| *v = *v * a));
