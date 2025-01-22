@@ -33,6 +33,21 @@ impl<K> Matrix<K> {
     }
 }
 
+impl<K> Matrix<K> {
+    pub fn new(elements: Vec<Vec<K>>) -> Self {
+        Matrix { elements }
+    }
+}
+
+impl<K> Matrix<K> {
+    pub fn rows(&self) -> usize {
+        self.elements.len()
+    }
+    pub fn cols(&self) -> usize {
+        self.elements[0].len()
+    }
+}
+
 impl<K> PartialEq for Matrix<K>
 where
     Vec<K>: PartialEq,
@@ -53,16 +68,16 @@ where
     type Output = Matrix<K>;
 
     fn add(self, rhs: Self) -> Self::Output {
-        if self.elements.len() != rhs.elements.len()
-            || self.elements[0].len() != rhs.elements[0].len()
+        if self.rows() != rhs.rows()
+            || self.cols() != rhs.cols()
         {
             panic!("Matrices must have the same dimensions");
         }
 
-        let mut elements = vec![vec![K::default(); self.elements[0].len()]; self.elements.len()];
+        let mut elements = vec![vec![K::default(); self.cols()]; self.rows()];
 
-        for i in 0..self.elements.len() {
-            for j in 0..self.elements[i].len() {
+        for i in 0..self.rows() {
+            for j in 0..self.cols() {
                 elements[i][j] = self.elements[i][j] + rhs.elements[i][j];
             }
         }
@@ -78,16 +93,16 @@ where
     type Output = Matrix<K>;
 
     fn sub(self, rhs: Self) -> Self::Output {
-        if self.elements.len() != rhs.elements.len()
-            || self.elements[0].len() != rhs.elements[0].len()
+        if self.rows() != rhs.rows()
+            || self.cols() != rhs.cols()
         {
             panic!("Matrices must have the same dimensions");
         }
 
-        let mut elements = vec![vec![K::default(); self.elements[0].len()]; self.elements.len()];
+        let mut elements = vec![vec![K::default(); self.cols()]; self.rows()];
 
-        for i in 0..self.elements.len() {
-            for j in 0..self.elements[i].len() {
+        for i in 0..self.rows() {
+            for j in 0..self.cols() {
                 elements[i][j] = self.elements[i][j] - rhs.elements[i][j];
             }
         }
@@ -104,10 +119,10 @@ where
     type Output = Matrix<K>;
 
     fn mul(self, rhs: T) -> Self::Output {
-        let mut elements = vec![vec![K::default(); self.elements[0].len()]; self.elements.len()];
+        let mut elements = vec![vec![K::default(); self.cols()]; self.rows()];
 
-        for i in 0..self.elements.len() {
-            for j in 0..self.elements[0].len() {
+        for i in 0..self.rows() {
+            for j in 0..self.cols() {
                 elements[i][j] = self.elements[i][j] * rhs;
             }
         }
@@ -126,19 +141,19 @@ where
         if self.elements.is_empty() || rhs.elements.is_empty() {
             panic!("Matrix or vector is empty. Cannot perform multiplication.");
         }
-        if self.elements[0].len() != rhs.elements.len() {
+        if self.cols() != rhs.len() {
             panic!(
                 "Incompatible dimensions for matrix-vector multiplication. \
                 Matrix has {} columns, but vector has {} elements.",
-                self.elements[0].len(),
-                rhs.elements.len()
+                self.cols(),
+                rhs.len()
             );
         }
 
-        let mut elements = vec![K::default(); self.elements.len()];
+        let mut elements = vec![K::default(); self.rows()];
 
-        for i in 0..self.elements.len() {
-            for j in 0..self.elements[0].len() {
+        for i in 0..self.rows() {
+            for j in 0..self.cols() {
                 elements[i] = elements[i] + self.elements[i][j] * rhs.elements[j];
             }
         }
@@ -157,20 +172,20 @@ where
         if self.elements.is_empty() || rhs.elements.is_empty() {
             panic!("One of the matrices is empty. Cannot perform multiplication.");
         }
-        if self.elements[0].len() != rhs.elements.len() {
+        if self.cols() != rhs.rows() {
             panic!(
                 "Incompatible dimensions for matrix multiplication. \
                 Left matrix has {} columns, but right matrix has {} rows.",
-                self.elements[0].len(),
-                rhs.elements.len()
+                self.cols(),
+                rhs.rows()
             );
         }
 
-        let mut elements = vec![vec![K::default(); rhs.elements[0].len()]; self.elements.len()];
+        let mut elements = vec![vec![K::default(); rhs.cols()]; self.rows()];
 
-        for i in 0..self.elements.len() {
-            for j in 0..rhs.elements[0].len() {
-                for k in 0..self.elements[0].len() {
+        for i in 0..self.rows() {
+            for j in 0..rhs.cols() {
+                for k in 0..self.cols() {
                     elements[i][j] = elements[i][j] + (self.elements[i][k] * rhs.elements[k][j]);
                 }
             }
@@ -185,7 +200,7 @@ where
     K: Add<Output = K> + Copy,
 {
     pub fn add(&mut self, m: Matrix<K>) {
-        if self.elements.len() != m.elements.len() || self.elements[0].len() != m.elements[0].len()
+        if self.rows() != m.rows() || self.cols() != m.cols()
         {
             panic!("Matrices must have the same dimensions");
         }
@@ -206,7 +221,7 @@ where
     K: Sub<Output = K> + Copy,
 {
     pub fn sub(&mut self, m: Matrix<K>) {
-        if self.elements.len() != m.elements.len() || self.elements[0].len() != m.elements[0].len()
+        if self.rows() != m.rows() || self.cols() != m.cols()
         {
             panic!("Matrices must have the same dimensions");
         }

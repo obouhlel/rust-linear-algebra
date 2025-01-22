@@ -33,6 +33,18 @@ impl<K> Vector<K> {
     }
 }
 
+impl<K> Vector<K> {
+    pub fn new(elements: Vec<K>) -> Self {
+        Vector { elements }
+    }
+}
+
+impl<K> Vector<K> {
+    pub fn len(&self) -> usize {
+        self.elements.len()
+    }
+}
+
 impl<K> PartialEq for Vector<K>
 where
     K: PartialEq,
@@ -90,7 +102,7 @@ where
     type Output = K;
 
     fn mul(self, rhs: Self) -> Self::Output {
-        if self.elements.len() != rhs.elements.len() {
+        if self.len() != rhs.len() {
             panic!("The vector need to be on the same plan");
         }
 
@@ -106,7 +118,7 @@ where
     K: Add<Output = K> + Copy + Default,
 {
     pub fn add(&mut self, v: Vector<K>) {
-        if self.elements.len() != v.elements.len() {
+        if self.len() != v.len() {
             panic!("The vector need to be on the same plan");
         }
 
@@ -119,7 +131,7 @@ where
     K: Sub<Output = K> + Copy + Default,
 {
     pub fn sub(&mut self, v: Vector<K>) {
-        if self.elements.len() != v.elements.len() {
+        if self.len() != v.len() {
             panic!("The vector need to be on the same plan");
         }
 
@@ -142,7 +154,7 @@ where
     K: Mul<Output = K> + Copy + Default,
 {
     pub fn dot(&self, v: Self) -> K {
-        if self.elements.len() != v.elements.len() {
+        if self.len() != v.len() {
             panic!("The vector need to be on the same plan");
         }
 
