@@ -116,6 +116,37 @@ where
     }
 }
 
+impl<K> Mul<Vector<K>> for Matrix<K>
+where
+    K: Copy + Default + Add<Output = K> + Mul<Output = K>,
+{
+    type Output = Vector<K>;
+
+    fn mul(self, rhs: Vector<K>) -> Self::Output {
+        if self.elements.is_empty() || rhs.elements.is_empty() {
+            panic!("Matrix or vector is empty. Cannot perform multiplication.");
+        }
+        if self.elements[0].len() != rhs.elements.len() {
+            panic!(
+                "Incompatible dimensions for matrix-vector multiplication. \
+                Matrix has {} columns, but vector has {} elements.",
+                self.elements[0].len(),
+                rhs.elements.len()
+            );
+        }
+
+        let mut elements = vec![K::default(); self.elements.len()];
+
+        for i in 0..self.elements.len() {
+            for j in 0..self.elements[0].len() {
+                elements[i] = elements[i] + self.elements[i][j] * rhs.elements[j];
+            }
+        }
+
+        Vector { elements }
+    }
+}
+
 impl<K> Mul for Matrix<K>
 where
     K: Mul<Output = K> + Add<Output = K> + Copy + Default,
@@ -207,5 +238,8 @@ where
 {
     pub fn mul_mat(&self, mat: Matrix<K>) -> Matrix<K> {
         self.clone() * mat
+    }
+    pub fn mul_vec(&self, vec: Vector<K>) -> Vector<K> {
+        self.clone() * vec
     }
 }
