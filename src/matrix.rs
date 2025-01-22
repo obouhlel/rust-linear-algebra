@@ -252,3 +252,20 @@ where
         self.clone() * vec
     }
 }
+
+impl<K> Matrix<K>
+where
+    K: Copy + Add<Output = K>,
+{
+    pub fn trace(&self) -> K {
+        if self.cols() != self.rows() {
+            panic!("Matrix must be a square");
+        }
+
+        let mut sum = self.elements[0][0];
+        for i in 1..self.rows() {
+            sum = sum + self.elements[i][i];
+        }
+        sum
+    }
+}
