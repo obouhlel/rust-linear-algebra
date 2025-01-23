@@ -165,9 +165,9 @@ where
     }
 }
 
-impl<V> Vector<V>
+impl<K> Vector<K>
 where
-    V: Mul<f32, Output = V> + Into<f32> + Copy + Default,
+    K: Mul<f32, Output = K> + Into<f32> + Copy + Default,
 {
     pub fn norm_1(&self) -> f32 {
         self.iter().fold(0.0, |acc, &x| {
