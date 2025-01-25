@@ -21,7 +21,7 @@ mod tests {
         }
     }
 
-    // Test 1 : Matrice inversible
+    // Test 1: Matrice inversible
     #[test]
     fn test_row_echelon_invertible() {
         let matrix = Matrix::from(vec![vec![2, 1, -1], vec![-3, -1, 2], vec![-2, 1, 2]]);
@@ -29,7 +29,7 @@ mod tests {
         assert_eq!(matrix.row_echelon(), expected);
     }
 
-    // Test 2 : Matrice non inversible
+    // Test 2: Matrice non inversible
     #[test]
     fn test_row_echelon_non_invertible() {
         let matrix = Matrix::from(vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 9]]);
@@ -37,7 +37,7 @@ mod tests {
         assert_eq!(matrix.row_echelon(), expected);
     }
 
-    // Test 3 : Matrice avec des lignes linéairement dépendantes
+    // Test 3: Matrice avec des lignes linéairement dépendantes
     #[test]
     fn test_row_echelon_linearly_dependent() {
         let matrix = Matrix::from(vec![vec![1, 2, 1], vec![2, 4, 2], vec![3, 6, 3]]);
@@ -45,7 +45,7 @@ mod tests {
         assert_eq!(matrix.row_echelon(), expected);
     }
 
-    // Test 5 : Matrice vide
+    // Test 4: Matrice vide
     #[test]
     fn test_row_echelon_empty() {
         let matrix = Matrix::<i32>::from(vec![]);
@@ -53,7 +53,7 @@ mod tests {
         assert_eq!(matrix.row_echelon(), expected);
     }
 
-    // Test 6 : Matrice avec une seule ligne
+    // Test 5: Matrice avec une seule ligne
     #[test]
     fn test_row_echelon_single_row() {
         let matrix = Matrix::from(vec![vec![1, 2, 3]]);
@@ -61,7 +61,7 @@ mod tests {
         assert_eq!(matrix.row_echelon(), expected);
     }
 
-    // Test 7 : Matrice avec une seule colonne
+    // Test 6: Matrice avec une seule colonne
     #[test]
     fn test_row_echelon_single_column() {
         let matrix = Matrix::from(vec![vec![1], vec![2], vec![3]]);
@@ -69,7 +69,7 @@ mod tests {
         assert_eq!(matrix.row_echelon(), expected);
     }
 
-    // Test 8 : Matrice avec des zéros partout
+    // Test 7: Matrice avec des zéros partout
     #[test]
     fn test_row_echelon_all_zeros() {
         let matrix = Matrix::from(vec![vec![0, 0, 0], vec![0, 0, 0], vec![0, 0, 0]]);
@@ -77,7 +77,7 @@ mod tests {
         assert_eq!(matrix.row_echelon(), expected);
     }
 
-    // Test 9 : Matrice rectangulaire (plus de lignes que de colonnes)
+    // Test 8: Matrice rectangulaire (plus de lignes que de colonnes)
     #[test]
     fn test_row_echelon_rectangular_more_rows() {
         let matrix = Matrix::from(vec![vec![1, 2], vec![3, 4], vec![5, 6]]);
@@ -85,7 +85,7 @@ mod tests {
         assert_eq!(matrix.row_echelon(), expected);
     }
 
-    // Test 10 : Matrice rectangulaire (plus de colonnes que de lignes)
+    // Test 9: Matrice rectangulaire (plus de colonnes que de lignes)
     #[test]
     fn test_row_echelon_rectangular_more_columns() {
         let matrix = Matrix::from(vec![vec![1, 2, 3, 4], vec![5, 6, 7, 8]]);
@@ -93,7 +93,7 @@ mod tests {
         assert_eq!(matrix.row_echelon(), expected);
     }
 
-    // Test 11 : Matrice identité
+    // Test 10: Matrice identité
     #[test]
     fn test_row_echelon_identity() {
         let matrix = Matrix::from(vec![vec![1., 0., 0.], vec![0., 1., 0.], vec![0., 0., 1.]]);
@@ -101,7 +101,7 @@ mod tests {
         assert_matrix_eq_with_tolerance(&matrix.row_echelon(), &expected, 1e-6);
     }
 
-    // Test 12 : Matrice 2x2
+    // Test 11: Matrice 2x2
     #[test]
     fn test_row_echelon_2x2() {
         let matrix = Matrix::from(vec![vec![1., 2.], vec![3., 4.]]);
@@ -109,7 +109,7 @@ mod tests {
         assert_matrix_eq_with_tolerance(&matrix.row_echelon(), &expected, 1e-6);
     }
 
-    // Test 13 : Matrice 2x2 avec lignes dépendantes
+    // Test 12: Matrice 2x2 avec lignes dépendantes
     #[test]
     fn test_row_echelon_2x2_dependent() {
         let matrix = Matrix::from(vec![vec![1., 2.], vec![2., 4.]]);
@@ -117,7 +117,7 @@ mod tests {
         assert_matrix_eq_with_tolerance(&matrix.row_echelon(), &expected, 1e-6);
     }
 
-    // Test 14 : Matrice 3x5
+    // Test 13: Matrice 3x5
     #[test]
     fn test_row_echelon_3x5() {
         let matrix = Matrix::from(vec![
