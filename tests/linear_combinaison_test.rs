@@ -1,5 +1,5 @@
-use rust_linear_algebra::linear_combinaison::linear_combination;
 use rust_linear_algebra::vector::Vector;
+use rust_linear_algebra::vector::linear_combinaison::linear_combination;
 
 #[cfg(test)]
 mod tests {

@@ -1,5 +1,5 @@
-use rust_linear_algebra::angle_cos::angle_cos;
 use rust_linear_algebra::vector::Vector;
+use rust_linear_algebra::vector::angle_cos::angle_cos;
 
 #[cfg(test)]
 mod tests {
