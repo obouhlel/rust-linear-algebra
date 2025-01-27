@@ -47,9 +47,6 @@ where
                 }
 
                 let pivot_value = result.elements[pivot_row][col];
-                if pivot_value == K::default() {
-                    continue;
-                }
 
                 result.div_row(pivot_row, pivot_value);
 
