@@ -1,5 +1,4 @@
-use rust_linear_algebra::vector::Vector;
-use rust_linear_algebra::vector::cross_product::cross_product;
+use rust_linear_algebra::vector::{cross_product, Vector};
 
 #[cfg(test)]
 mod tests {

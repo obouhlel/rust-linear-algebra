@@ -4,6 +4,8 @@ pub mod row_echelon;
 pub mod trace;
 pub mod transpose;
 
+pub use ops::*;
+
 use std::cmp::PartialEq;
 use std::fmt::Debug;
 use std::slice::{Iter, IterMut};

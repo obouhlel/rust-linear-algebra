@@ -1,5 +1,5 @@
 use super::super::Vector;
-use std::ops::{Mul, Add};
+use std::ops::{Add, Mul};
 
 impl<K, T> Mul<T> for Vector<K>
 where

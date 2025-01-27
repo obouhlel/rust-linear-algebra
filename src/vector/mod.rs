@@ -1,8 +1,12 @@
-pub mod ops;
 pub mod angle_cos;
 pub mod cross_product;
 pub mod linear_combinaison;
 pub mod norm;
+pub mod ops;
+
+pub use angle_cos::*;
+pub use cross_product::*;
+pub use linear_combinaison::*;
 
 use std::cmp::PartialEq;
 use std::slice::{Iter, IterMut};
