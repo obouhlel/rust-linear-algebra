@@ -1,5 +1,6 @@
 use super::Matrix;
 use crate::minus_one::MinusOne;
+use crate::one::One;
 use std::fmt::Debug;
 use std::ops::{Add, Div, Mul, Sub};
 
@@ -7,6 +8,7 @@ impl<K> Matrix<K>
 where
     K: Debug
         + Copy
+        + One
         + MinusOne
         + Default
         + PartialEq

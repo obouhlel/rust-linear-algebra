@@ -60,14 +60,7 @@ where
     fn det_matrix_nxn(&self) -> K {
         if !self.is_row_echelon_form() {
             let mut det = K::one();
-            let mut nb_swap = 0;
-            let result = self.gaussian_elemination(Some(&mut nb_swap));
-            for i in 0..result.rows() {
-                det = det * result.elements[i][i];
-            }
-            if nb_swap % 2 != 0 {
-                det = det * K::minus_one();
-            }
+            let _ = self.gaussian_elemination(Some(&mut det));
             return det;
         }
         let mut det = K::one();
