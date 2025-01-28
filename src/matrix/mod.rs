@@ -1,4 +1,5 @@
 pub mod determinant;
+mod gaussian_elemination;
 pub mod ops;
 pub mod row_echelon;
 pub mod trace;
@@ -32,10 +33,14 @@ where
     }
 }
 
-impl<K> Matrix<K> {
-    pub fn new(elements: Vec<Vec<K>>) -> Self {
+impl<K: Default + Clone> Matrix<K> {
+    pub fn new(rows: usize, cols: usize) -> Self {
+        let elements = vec![vec![K::default(); cols]; rows];
         Matrix { elements }
     }
+}
+
+impl<K> Matrix<K> {
     pub fn iter(&self) -> Iter<Vec<K>> {
         self.elements.iter()
     }
