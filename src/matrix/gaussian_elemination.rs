@@ -2,7 +2,7 @@ use super::Matrix;
 use crate::minus_one::MinusOne;
 use crate::one::One;
 use std::fmt::Debug;
-use std::ops::{Add, Div, Mul, Sub};
+use std::ops::{Add, Div, Mul, Sub, SubAssign};
 
 impl<K> Matrix<K>
 where
@@ -14,6 +14,7 @@ where
         + PartialEq
         + Add<Output = K>
         + Sub<Output = K>
+        + SubAssign<K>
         + Mul<Output = K>
         + Div<Output = K>,
 {
@@ -32,7 +33,11 @@ where
             .for_each(|element| *element = *element / scalar);
     }
 
-    pub(crate) fn gaussian_elemination(&self, mut det: Option<&mut K>) -> Matrix<K> {
+    pub(crate) fn gaussian_elemination(
+        &self,
+        mut det: Option<&mut K>,
+        mut identity_mat: Option<&mut Matrix<K>>,
+    ) -> Matrix<K> {
         if self.elements.is_empty() || self.elements[0].is_empty() {
             return self.clone();
         }
@@ -45,14 +50,26 @@ where
             if let Some(pivot) = result.find_pivot(pivot_row, col) {
                 if pivot != pivot_row {
                     result.elements.swap(pivot_row, pivot);
+
+                    if let Some(ref mut identity) = identity_mat {
+                        identity.elements.swap(pivot_row, pivot);
+                    }
+
                     sign = sign * K::minus_one();
                 }
 
                 let pivot_value = result.elements[pivot_row][col];
+
                 if let Some(ref mut determinant) = det {
                     **determinant = **determinant * pivot_value;
                 }
+
                 result.div_row(pivot_row, pivot_value);
+
+                if let Some(ref mut identity) = identity_mat {
+                    let pivot_identity_value = identity.elements[pivot_row][col];
+                    identity.div_row(pivot_row, pivot_identity_value);
+                }
 
                 for row in 0..result.rows() {
                     if row == pivot_row {
@@ -65,8 +82,14 @@ where
                     }
 
                     for column in col..result.cols() {
-                        result.elements[row][column] = result.elements[row][column]
-                            - (factor * result.elements[pivot_row][column]);
+                        let pivot_value = result.elements[pivot_row][column];
+                        result.elements[row][column] -= factor * pivot_value;
+
+                        if let Some(ref mut identity) = identity_mat {
+                            let identity_factor = identity.elements[pivot_row][col];
+                            let pivot_value = identity.elements[pivot_row][column];
+                            identity.elements[row][column] -= identity_factor * pivot_value;
+                        }
                     }
                 }
 

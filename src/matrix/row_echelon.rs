@@ -2,7 +2,7 @@ use super::Matrix;
 use crate::minus_one::MinusOne;
 use crate::one::One;
 use std::fmt::Debug;
-use std::ops::{Add, Div, Mul, Sub};
+use std::ops::{Add, Div, Mul, Sub, SubAssign};
 
 impl<K> Matrix<K>
 where
@@ -14,6 +14,7 @@ where
         + PartialEq
         + Add<Output = K>
         + Sub<Output = K>
+        + SubAssign<K>
         + Mul<Output = K>
         + Div<Output = K>,
 {
@@ -24,7 +25,7 @@ where
         if self.is_row_echelon_form() {
             return self.clone();
         }
-        self.gaussian_elemination(None)
+        self.gaussian_elemination(None, None)
     }
 }
 

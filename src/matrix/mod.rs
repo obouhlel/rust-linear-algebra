@@ -1,5 +1,7 @@
 pub mod determinant;
 mod gaussian_elemination;
+pub mod identity;
+pub mod inverse;
 pub mod ops;
 pub mod row_echelon;
 pub mod trace;

@@ -2,7 +2,7 @@ use super::Matrix;
 use crate::minus_one::MinusOne;
 use crate::one::One;
 use std::fmt::Debug;
-use std::ops::{Add, Div, Mul, Sub};
+use std::ops::{Add, Div, Mul, Sub, SubAssign};
 
 impl<K> Matrix<K>
 where
@@ -14,6 +14,7 @@ where
         + PartialEq
         + Add<Output = K>
         + Sub<Output = K>
+        + SubAssign<K>
         + Mul<Output = K>
         + Div<Output = K>,
 {
@@ -60,7 +61,7 @@ where
     fn det_matrix_nxn(&self) -> K {
         if !self.is_row_echelon_form() {
             let mut det = K::one();
-            let _ = self.gaussian_elemination(Some(&mut det));
+            let _ = self.gaussian_elemination(Some(&mut det), None);
             return det;
         }
         let mut det = K::one();
