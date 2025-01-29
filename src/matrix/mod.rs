@@ -3,10 +3,12 @@ mod gaussian_elemination;
 pub mod identity;
 pub mod inverse;
 pub mod ops;
+pub mod rank;
 pub mod row_echelon;
 pub mod trace;
 pub mod transpose;
 
+pub use identity::*;
 pub use ops::*;
 
 use std::cmp::PartialEq;
