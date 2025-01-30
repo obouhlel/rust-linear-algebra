@@ -25,7 +25,7 @@ where
         if self.is_row_echelon_form() {
             return self.clone();
         }
-        self.gaussian_elemination(None, None)
+        self.gaussian_elimination(None, None)
     }
 }
 

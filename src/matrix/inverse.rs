@@ -28,9 +28,7 @@ where
             return Err("Matrix is singular and cannot be inverted");
         }
         let mut identity = identity_mat::<K>(self.cols(), self.rows());
-        let result = self.gaussian_elemination(None, Some(&mut identity));
-        println!("identity (end) = {:?}", identity);
-        println!("result = {:?}", result);
+        let _ = self.gaussian_elimination(None, Some(&mut identity));
         Ok(identity)
     }
 }

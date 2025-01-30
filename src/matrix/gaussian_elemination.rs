@@ -33,7 +33,7 @@ where
             .for_each(|element| *element = *element / scalar);
     }
 
-    pub(crate) fn gaussian_elemination(
+    pub(crate) fn gaussian_elimination(
         &self,
         mut det: Option<&mut K>,
         mut identity_mat: Option<&mut Matrix<K>>,
@@ -67,8 +67,7 @@ where
                 result.div_row(pivot_row, pivot_value);
 
                 if let Some(ref mut identity) = identity_mat {
-                    let pivot_identity_value = identity.elements[pivot_row][col];
-                    identity.div_row(pivot_row, pivot_identity_value);
+                    identity.div_row(pivot_row, pivot_value);
                 }
 
                 for row in 0..result.rows() {
@@ -84,11 +83,12 @@ where
                     for column in col..result.cols() {
                         let pivot_value = result.elements[pivot_row][column];
                         result.elements[row][column] -= factor * pivot_value;
+                    }
 
-                        if let Some(ref mut identity) = identity_mat {
-                            let identity_factor = identity.elements[pivot_row][col];
-                            let pivot_value = identity.elements[pivot_row][column];
-                            identity.elements[row][column] -= identity_factor * pivot_value;
+                    if let Some(ref mut identity) = identity_mat {
+                        for column in 0..identity.cols() {
+                            let pivot_identity_value = identity.elements[pivot_row][column];
+                            identity.elements[row][column] -= factor * pivot_identity_value;
                         }
                     }
                 }
