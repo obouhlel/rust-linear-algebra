@@ -1,5 +1,5 @@
 use super::Matrix;
-use crate::one::One;
+use crate::num::One;
 
 pub fn identity_mat<K>(cols: usize, rows: usize) -> Matrix<K>
 where

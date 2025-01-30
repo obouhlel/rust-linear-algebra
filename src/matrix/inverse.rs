@@ -1,7 +1,7 @@
 use super::identity::identity_mat;
 use super::Matrix;
-use crate::minus_one::MinusOne;
-use crate::one::One;
+use crate::num::MinusOne;
+use crate::num::One;
 use std::fmt::Debug;
 use std::ops::{Add, Div, Mul, Sub, SubAssign};
 
