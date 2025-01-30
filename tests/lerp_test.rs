@@ -1,5 +1,5 @@
-use rust_linear_algebra::lerp::lerp;
 use rust_linear_algebra::matrix::Matrix;
+use rust_linear_algebra::utils::lerp;
 use rust_linear_algebra::vector::Vector;
 
 #[cfg(test)]
