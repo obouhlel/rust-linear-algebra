@@ -2,7 +2,7 @@
 name = "rust-linear-algebra"
 version = "0.1.0"
 edition = "2021"
-publish = ["linear-algebra-obouhlel"]
+publish = ["crates-io"]
 description = "A linear algebra library for Rust"
 include = ["src/*"]
 exclude = ["tests/*"]
