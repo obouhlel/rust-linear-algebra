@@ -16,7 +16,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-rust-linear-algebra = "0.1.0"
+rust-linear-algebra = "0.1.1"
 ```
 
 ## Usage
