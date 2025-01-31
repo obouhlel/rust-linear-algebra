@@ -10,5 +10,6 @@ readme = "README.md"
 repository = "https://github.com/obouhlel/rust-linear-algebra"
 license = "MIT"
 keywords = ["math", "matrix", "vector", "rust"]
+documentation = "https://docs.rs/rust-linear-algebra"
 
 [dependencies]
