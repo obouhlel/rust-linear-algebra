@@ -1,4 +1,6 @@
-# Rust Linear Algebra Library
+# Rust Linear Algebra Library\
+
+![Rust](https://img.shields.io/badge/Rust-1.70%2B-orange)
 
 A comprehensive linear algebra library implemented in Rust, providing efficient and safe mathematical operations.
 
